@@ -1,0 +1,35 @@
+
+from collections import Counter
+import os
+
+# Ask user for input
+user_input = input("Enter text or file path: ")
+
+# If input is a valid file path, read from file
+if os.path.isfile(user_input):
+    with open(user_input, 'r', encoding='utf-8') as f:
+        text = f.read()
+else:
+    # Otherwise, treat input as direct text
+    text = user_input
+
+# Count lines, words, characters
+line_count = len(text.splitlines())
+word_list = text.split()
+word_count = len(word_list)
+char_count = len(text)
+
+# Word frequency
+word_frequency = {}
+for w in word_list:
+    w = w.lower()
+    word_frequency[w] = word_frequency.get(w, 0) + 1
+
+# Output results
+print("Total lines:", line_count)
+print("Total words:", word_count)
+print("Total characters:", char_count)
+
+print("\nTop 10 most frequent words:")
+for word, freq in sorted(word_frequency.items(), key=lambda x: x[1], reverse=True)[:10]:
+    print(word, ":", freq)
