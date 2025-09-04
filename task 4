@@ -1,0 +1,24 @@
+
+
+import requests
+from bs4 import BeautifulSoup
+
+def web():
+# Example website (you can replace with your own)
+    url = "https://timesofindia.indiatimes.com/home/headlines"
+
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    # Find all headline elements (adjust 'h2' and class as per website structure)
+    headlines = soup.find_all('h2')
+
+
+    for i, headline in enumerate(headlines[:10], start=1):
+        print(f"{i}. {headline.get_text(strip=True)}")
+
+    with open("web_headline.text","w",encoding="utf-8") as f:
+       for i, headline in enumerate(headlines,start=1):
+           text=headline.get_text(strip=True)
+           f.write(f"{i}. {text}\n")
+web()
